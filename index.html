@@ -4,30 +4,24 @@
 </head>
 
 <body>
-  <div id="example">
-    <p>Original message: "{{ message }}"</p>
-    <p>Computed reversed message: "{{ reversedMessage }}"</p>
+  <div id="watchYou">
+    {{ fullName }}
   </div>
 
   <script type="text/javascript">
     const vm = new Vue({
-      el: '#example',
+      el: '#watchYou',
       data: {
-        message: 'Hello'
+        firstName: 'Foo',
+        lastName: 'Bar',
+        fullName: 'Foo Bar'
       },
-      // computed is a cache
-      computed: {
-        reversedMessage: function () {
-          return this.message.split('').reverse().join('')
+      watch: {
+        firstName: function(val) {
+          this.fullName = val + ' ' + this.lastName
         },
-        // cacheing getter
-        // currentDate: function() {
-        //   return Date.now()
-        // }
-      },
-      methods: {
-        currentDate: function() {
-          return Date.now()
+        lastName: function(val) {
+          this.fullName = this.firstName + ' ' + val
         }
       }
     })
