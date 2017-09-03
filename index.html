@@ -14,9 +14,14 @@
 
   <script type="text/javascript">
     const Child = {
-      template: '<button @click="counter += 1"> {{ counter }} </button>',
+      template: '<button @click="incr"> {{ counter }} </button>',
       data: function() {
         return { counter: 0 };
+      },
+      methods: {
+        incr: function () {
+          this.counter += 1
+        }
       }
     };
 
