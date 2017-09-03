@@ -12,11 +12,9 @@
 
   <script type="text/javascript">
     const Child = {
-      template: '<div> {{ message }}</div>',
+      template: '<button @click="counter += 1"> {{ counter }} </button>',
       data: function() {
-        return {
-          message: 'hello'
-        }
+        return { counter: 0 };
       }
     };
 
