@@ -6,20 +6,37 @@
 </head>
 
 <body>
-  <div id="example">
-    <child message="this is a props"></child>
+  <div id="counter-event-example">
+    <p> {{ total }} </p>
+    <button-counter @increment="incrementTotal"></button-counter>
   </div>
 
   <script type="text/javascript">
-    const Child = {
-      template: '<span> {{ message }}</span>',
-      props: ['message']
+    const buttonCounter = {
+      template: '<button @click="incrementCounter">{{ counter }}</button>',
+      data: function () {
+        return { counter: 0 }
+      },
+      methods: {
+        incrementCounter: function () {
+          this.counter += 1;
+          this.$emit('increment');
+        }
+      }
     };
 
     new Vue({
-      el: '#example',
+      el: '#counter-event-example',
+      data: {
+        total: 0
+      },
       components: {
-        'child': Child
+        'button-counter': buttonCounter
+      },
+      methods: {
+        incrementTotal: function () {
+          this.total += 1
+        }
       }
     })
   </script>
