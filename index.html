@@ -6,38 +6,22 @@
 </head>
 
 <body>
-  <div id="counter-event-example">
-    <p> {{ total }} </p>
-    <button-counter @increment="incrementTotal"></button-counter>
-    <button-counter @increment="incrementTotal"></button-counter>
+  <div id="component-example">
+    <class-component-test v-bind:class="{ active: isActive }"></class-component-test>
   </div>
 
   <script type="text/javascript">
-    const buttonCounter = {
-      template: '<button @click="incrementCounter">{{ counter }}</button>',
-      data: function () {
-        return { counter: 0 }
-      },
-      methods: {
-        incrementCounter: function () {
-          this.counter += 1;
-          this.$emit('increment');
-        }
-      }
+    const classComponent = {
+      template: '<p class="foo bar"> Hi </p>'
     };
 
     new Vue({
-      el: '#counter-event-example',
-      data: {
-        total: 0
-      },
+      el: '#component-example',
       components: {
-        'button-counter': buttonCounter
+        'class-component-test': classComponent
       },
-      methods: {
-        incrementTotal: function () {
-          this.total += 1
-        }
+      data: {
+        isActive: true
       }
     })
   </script>
