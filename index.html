@@ -4,25 +4,49 @@
 </head>
 
 <body>
-  <div id="watchYou">
-    {{ fullName }}
+  <div id="watch-example">
+    <p>
+      Ask a yes/noe question:
+      <input v-model="question" />
+    </p>
+    <p> {{ answer }}</p>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.16.0/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
   <script type="text/javascript">
-    const vm = new Vue({
-      el: '#watchYou',
+    const watchExampleVM = new Vue({
+      el: '#watch-example',
       data: {
-        firstName: 'Foo',
-        lastName: 'Bar',
-        fullName: 'Foo Bar'
+        question: '',
+        answer: 'I cannnot give you an anser until you ask a question'
       },
       watch: {
-        firstName: function(val) {
-          this.fullName = val + ' ' + this.lastName
-        },
-        lastName: function(val) {
-          this.fullName = this.firstName + ' ' + val
+        question: function (newQuestion) {
+          this.answer = 'Waiting for you to stop typing...';
+          this.getAnswer()
         }
+      },
+      methods: {
+        // debounce is a method likes throttle
+        getAnswer: _.debounce(
+          function () {
+            if (this.question.indexOf('?') === -1) {
+              this.answer = 'Questions usually contain a question mark. ;-)';
+              return
+            }
+            this.answer = 'Thinking...';
+            const vm = this;
+            axios.get('https://yesno.wtf/api')
+                .then(function (response) {
+                    vm.answer = _.capitalize(response.data.answer);
+                })
+                .catch(function (error) {
+                    vm.answer = 'Error! Could not reach th API.' + error
+                })
+          },
+          500
+        )
       }
     })
   </script>
