@@ -11,12 +11,20 @@
   </div>
 
   <script type="text/javascript">
-    Vue.component('my-component', {
-      template: '<div> A custom component!</div>'
-    });
+    const Child = {
+      template: '<div> {{ message }}</div>',
+      data: function() {
+        return {
+          message: 'hello'
+        }
+      }
+    };
 
     new Vue({
-      el: '#example'
+      el: '#example',
+      components: {
+        'my-component': Child
+      }
     })
   </script>
 </body>
