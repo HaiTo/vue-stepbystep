@@ -7,28 +7,19 @@
 
 <body>
   <div id="example">
-    <my-component></my-component>
-    <my-component></my-component>
-    <my-component></my-component>
+    <child message="this is a props"></child>
   </div>
 
   <script type="text/javascript">
     const Child = {
-      template: '<button @click="incr"> {{ counter }} </button>',
-      data: function() {
-        return { counter: 0 };
-      },
-      methods: {
-        incr: function () {
-          this.counter += 1
-        }
-      }
+      template: '<span> {{ message }}</span>',
+      props: ['message']
     };
 
     new Vue({
       el: '#example',
       components: {
-        'my-component': Child
+        'child': Child
       }
     })
   </script>
